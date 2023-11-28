@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Kismet/KismetMathLibrary.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -105,10 +106,12 @@ void ATwinStickCharacter::Move(const FInputActionValue& Value)
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		// get forward vector
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector ForwardDirection = UKismetMathLibrary::GetForwardVector(FRotator(0.0f, 0.0f, Rotation.Yaw));
 	
 		// get right vector 
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		//const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		const FVector RightDirection = UKismetMathLibrary::GetRightVector(FRotator(0.0f, 0.0f, Rotation.Roll));
 
 		// add movement 
 		AddMovementInput(ForwardDirection, MovementVector.Y);
